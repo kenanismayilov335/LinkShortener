@@ -52,10 +52,9 @@ async def msgg(event):
 @BotzHub.on(events.callbackquery.CallbackQuery(data="help"))
 async def send_help(event):
     await event.edit(
-        "**URL Shortener.**\n\nSend me any URL and I'll shorten it for you!\nJoin @BotzHub if you liked this bot!",
+        "**Link Kısaltıcı.**\n\nBana Linki Gönder Ben Senin İçin Anında Onu Kısa Link Yapacağım!\nKatılmayı Unutma @RobotRoom!",
         buttons=[
-            [Button.switch_inline("Go Inline", query="", same_peer=True)],
-            [Button.inline("« Back", data="bck")],
+            [Button.inline("« Geri", data="bck")],
         ],
     )
 
@@ -70,7 +69,7 @@ async def fn_(event):
     if event.text.startswith("/"):
         return  # ignore commands.
     await event.reply(
-        "Select the shortenert service.",
+        "Hangi Servisi Kullanarak Kısaltmak İstiyorsunuz?.",
         buttons=[
             Button.inline("is.gd", data=f"i_{event.text}"),
             Button.inline("da.gd", data=f"d_{event.text}")
@@ -118,10 +117,10 @@ async def in_q(event):
             await event.answer([], switch_pm="Busy. Please try again.", switch_pm_param="xx")
 
 buttons = [
-    [Button.inline("Help", data="help")],
+    [Button.inline("Yardım", data="help")],
     [
-        Button.url("Channel", url="t.me/BotzHub"),
-        Button.url("Source", url="https://github.com/xditya/LinkShortener"),
+        Button.url("Kanalımız", url="t.me/RobotRoom"),
+        Button.url("Admin", url="t.me/KenanBitcoin"),
     ],
 ]
 
@@ -130,11 +129,11 @@ async def send_start(event, mode):
     user_ = await BotzHub.get_entity(event.sender_id)
     if mode == "msg":
         await event.reply(
-            f"Hi {user_.first_name}.\n\nI am a URL shortener bot!", buttons=buttons
+            f"Selam {user_.first_name}.\n\n Ben Link Kısaltma Botuyum!", buttons=buttons
         )
     else:
         await event.edit(
-            f"Hi {user_.first_name}.\n\nI am a URL shortener bot!", buttons=buttons
+            f"Selam {user_.first_name}.\n\nBen Link Kısaltma Botuyum!", buttons=buttons
         )
 
 
@@ -143,7 +142,7 @@ def link_shortener(url):
     try:
         requests.get(req_)
     except requests.exceptions.ConnectionError:
-        return "Invalid URL!"
+        return "Yanlış Link!"
     return requests.get(req_).text
 
 
@@ -155,7 +154,7 @@ def dagd_shrt(url):
     try:
         requests.get(r)
     except requests.exceptions.ConnectionError:
-        return "Invalid URL!"
+        return "Yanlış Link!"
     tmp = requests.get(f"{dagd_url}{r}").text
     if tmp:
         return tmp
@@ -163,5 +162,5 @@ def dagd_shrt(url):
         return "404. Not Available."
 
 print("Bot has started.")
-print("Do visit @BotzHub..")
+print("Do visit @RobotRoom..")
 BotzHub.run_until_disconnected()
